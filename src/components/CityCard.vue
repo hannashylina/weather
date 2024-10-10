@@ -1,5 +1,8 @@
 <script setup>
 import { computed } from 'vue'
+
+const iconURL = import.meta.env.VITE_OPEN_WEATHER_ICON_URL
+
 const props = defineProps({
     city: Object
 })
@@ -9,7 +12,7 @@ const currentTemp = computed(() => {
 })
 
 const currentIcon = computed(() => {
-    return props.city.weather.length > 0 ? `https://openweathermap.org/img/wn/${props.city.weather[0].icon}@2x.png` : ''
+    return props.city.weather.length > 0 ? `${iconURL}${props.city.weather[0].icon}@2x.png` : ''
 })
 
 const currentHumidity = computed(( ) => {
@@ -30,7 +33,7 @@ const currentWeatherDescription = computed(() => {
         <h2>{{ city.name }}</h2>
         <p>{{ currentWeatherDescription }}</p>
         <img :src="currentIcon" />
-        <p>{{ currentTemp }} &deg; C</p>
+        <p>{{ currentTemp }} &deg;C</p>
         <p>Humidity: {{ currentHumidity }}%</p>
         <p>Wind: {{currentWindSpeed}}m/s</p>
     </div>

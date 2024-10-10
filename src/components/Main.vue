@@ -8,6 +8,7 @@ const geoApiUrl = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
 const currentWeatherURL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_URL
 
 const cityQuery = ref('')
+let isCitiesdropdownOpen = ref(false)
 
 let citiesGeo = reactive([])
 const activeCity = reactive({data: null})
@@ -21,6 +22,7 @@ function changeActiveCity(city){
         .then(res => {
          //   console.log(res)
             activeCity.data = res.data
+            isCitiesdropdownOpen = false
         })
 }
 
@@ -30,13 +32,14 @@ watch(cityQuery, async (newCityQuery) => {
             .then(resp => {
          //       console.log(resp)
                 citiesGeo = resp.data;
+                isCitiesdropdownOpen = true
             })
     }
 
 })
 
 watch(activeCity, async (newActiveCity) => {
-    console.log(newActiveCity);
+    console.log(newActiveCity)
 })
 
 
@@ -44,16 +47,19 @@ watch(activeCity, async (newActiveCity) => {
 
 <template>
     <section>
-        <input type="text" placeholder="Enter city..." v-model="cityQuery" />
-        <div>
-            <div v-for="city in citiesGeo">
-                <button @click="changeActiveCity(city)">
-                    {{city.name}},
-                    <span v-if="city.state">{{city.state}},</span>
-                    {{city.country}}
+        <form class="cities-form">
+            <input class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
+            <div class="cities-input-dropdown" v-if="isCitiesdropdownOpen">
+                <button @click.prevent="changeActiveCity(city)"
+                        class="cities-input-button"
+                        type="button"
+                        v-for="city in citiesGeo">
+                    {{ city.name }},
+                    <span v-if="city.state">{{ city.state }},</span>
+                    {{ city.country }}
                 </button>
             </div>
-        </div>
+        </form>
     </section>
 
     <section class="cities-wrapper">
