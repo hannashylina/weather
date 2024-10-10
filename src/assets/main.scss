@@ -1,0 +1,22 @@
+@import 'base';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+.cities-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.city-card {
+  padding: 15px;
+  border: 1px solid #d1d1d1;
+  width: 20%;
+  border-radius: 5px;
+}
+
+
