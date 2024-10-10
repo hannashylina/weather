@@ -14,9 +14,14 @@ let isCitiesDropdownOpen = ref(false)
 
 let citiesGeo = reactive([])
 const activeCity = reactive({data: null})
+const activeCityChart = reactive({data: null})
 
-const isDefaultCity = computed(() => {
+const isActiveCity = computed(() => {
     return !!activeCity.data;
+})
+
+const isActiveCityChart = computed(() => {
+    return !!activeCityChart.data;
 })
 
 function changeActiveCity(city){
@@ -33,7 +38,8 @@ function getHourlyForecast(city){
     console.log(city);
     axios.get(`${hourlyForecastApiURL}?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${apiKey}`)
         .then(res => {
-            console.log(res);
+          //  console.log(res);
+            activeCityChart.data = res.data
         })
 }
 
@@ -74,8 +80,10 @@ watch(activeCity, async (newActiveCity) => {
     </section>
 
     <section class="city-wrapper">
-        <TemperatureChart></TemperatureChart>
-        <CityCard :city="activeCity.data" v-if="isDefaultCity"></CityCard>
+        <TemperatureChart v-if="isActiveCityChart"
+                          :data="activeCityChart.data.list"></TemperatureChart>
+        <CityCard v-if="isActiveCity" 
+                  :city="activeCity.data" ></CityCard>
     </section>
 
 
