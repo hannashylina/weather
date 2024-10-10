@@ -1,11 +1,11 @@
 <script setup>
 import { ref, watch, reactive, computed } from 'vue'
 import axios from 'axios'
-import CityDefault from "./CityDefault.vue"
+import CityCard from "./CityCard.vue"
 
-const apiKey = 'efb209fdfc249a7ec9c029897568d52f'
-const geoApiUrl = 'http://api.openweathermap.org/geo/1.0/direct'
-const currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather'
+const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY
+const geoApiUrl = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
+const currentWeatherURL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_URL
 
 const cityQuery = ref('')
 
@@ -54,7 +54,10 @@ watch(activeCity, async (newActiveCity) => {
                 </button>
             </div>
         </div>
-        <CityDefault :city="activeCity.data" v-if="isDefaultCity"></CityDefault>
+    </section>
+
+    <section class="cities-wrapper">
+        <CityCard :city="activeCity.data" v-if="isDefaultCity"></CityCard>
     </section>
 
 
