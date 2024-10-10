@@ -2,13 +2,15 @@
 import { ref, watch, reactive, computed } from 'vue'
 import axios from 'axios'
 import CityCard from "./CityCard.vue"
+import TemperatureChart from "./TemperatureChart.vue";
 
 const apiKey = import.meta.env.VITE_OPEN_WEATHER_API_KEY
-const geoApiUrl = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
-const currentWeatherURL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_URL
+const geoApiURL = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
+const currentWeatherApiURL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_URL
+const hourlyForecastApiURL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FORECAST_API_URL
 
 const cityQuery = ref('')
-let isCitiesdropdownOpen = ref(false)
+let isCitiesDropdownOpen = ref(false)
 
 let citiesGeo = reactive([])
 const activeCity = reactive({data: null})
@@ -18,21 +20,30 @@ const isDefaultCity = computed(() => {
 })
 
 function changeActiveCity(city){
-    axios.get(`${currentWeatherURL}?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`)
+    axios.get(`${currentWeatherApiURL}?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`)
         .then(res => {
          //   console.log(res)
             activeCity.data = res.data
-            isCitiesdropdownOpen = false
+            isCitiesDropdownOpen = false
+            getHourlyForecast(res.data)
+        })
+}
+
+function getHourlyForecast(city){
+    console.log(city);
+    axios.get(`${hourlyForecastApiURL}?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${apiKey}`)
+        .then(res => {
+            console.log(res);
         })
 }
 
 watch(cityQuery, async (newCityQuery) => {
     if(newCityQuery.length > 0) {
-        axios.get(`${geoApiUrl}?q=${newCityQuery}&limit=5&appid=${apiKey}`)
+        axios.get(`${geoApiURL}?q=${newCityQuery}&limit=5&appid=${apiKey}`)
             .then(resp => {
          //       console.log(resp)
                 citiesGeo = resp.data;
-                isCitiesdropdownOpen = true
+                isCitiesDropdownOpen = true
             })
     }
 
@@ -49,7 +60,7 @@ watch(activeCity, async (newActiveCity) => {
     <section>
         <form class="cities-form">
             <input class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
-            <div class="cities-input-dropdown" v-if="isCitiesdropdownOpen">
+            <div class="cities-input-dropdown" v-if="isCitiesDropdownOpen">
                 <button @click.prevent="changeActiveCity(city)"
                         class="cities-input-button"
                         type="button"
@@ -62,7 +73,8 @@ watch(activeCity, async (newActiveCity) => {
         </form>
     </section>
 
-    <section class="cities-wrapper">
+    <section class="city-wrapper">
+        <TemperatureChart></TemperatureChart>
         <CityCard :city="activeCity.data" v-if="isDefaultCity"></CityCard>
     </section>
 
