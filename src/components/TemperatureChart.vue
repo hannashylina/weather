@@ -5,17 +5,15 @@ const props = defineProps({
     data: Object
 })
 
-const today = new Date();
-const todayDay = today.getDate();
-const todayData = props.data.filter((item) => {
-    const date = new Date(item.dt * 1000); // convert seconds to milliseconds
-    return date.getDate() === todayDay;
-})
+let forecastData = props.data.slice(0, 8); // t°C entries for the next day
 
-const labels = todayData.map(item => item.dt_txt);
+const labels = forecastData.map(item => {
+    const date = new Date(item.dt * 1000); // convert seconds to milliseconds for unix date format
+    const minutes = date.getMinutes() === 0 ? '00' : date.getMinutes()
+    return `${date.getHours()}:${minutes}`;
+});
 
-const temperatures = todayData.map(item => Math.round(item.main.temp - 273.15)) // convert Kelvin to Celsius
-
+const temperatures = forecastData.map(item => Math.round(item.main.temp - 273.15)) // convert Kelvin to Celsius
 
 
 onMounted(() => {
