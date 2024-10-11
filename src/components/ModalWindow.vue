@@ -1,10 +1,20 @@
 <script setup>
-import { useModalStore } from './stores/modal'
-const modalStore = useModalStore()
+import { computed } from 'vue'
+const props = defineProps({
+    open: Boolean
+})
+
+const isModalOpen = computed(() => props.open)
+const emit = defineEmits(['close-modal'])
+
+function closeModal(){
+    emit('close-modal')
+}
 </script>
 
 <template>
-    <div :class="['modal', { open: modalStore.open }]">
+    <div :class="['modal', { open: isModalOpen }]">
+        <button @click="closeModal">x</button>
         <slot>Modal window</slot>
     </div>
 

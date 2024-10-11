@@ -38,7 +38,7 @@ function getHourlyForecast(city) {
 
 
 
-watch(defaultCity, async (newDefaultCity) => {
+watch(defaultCity, (newDefaultCity) => {
     citiesStore.replaceDefaultCity(newDefaultCity)
 })
 

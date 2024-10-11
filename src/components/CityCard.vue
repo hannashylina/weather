@@ -1,7 +1,11 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
+import { useCitiesStore } from './stores/cities'
+import ModalWindow from "./ModalWindow.vue";
 
-const iconURL = import.meta.env.VITE_OPEN_WEATHER_ICON_URL
+
+const ICON_URL = import.meta.env.VITE_OPEN_WEATHER_ICON_URL
+const citiesStore = useCitiesStore()
 
 const props = defineProps({
     city: Object
@@ -12,7 +16,7 @@ const currentTemp = computed(() => {
 })
 
 const currentIcon = computed(() => {
-    return props.city.weather.length > 0 ? `${iconURL}${props.city.weather[0].icon}@2x.png` : ''
+    return props.city.weather.length > 0 ? `${ICON_URL}${props.city.weather[0].icon}@2x.png` : ''
 })
 
 const currentHumidity = computed(( ) => {
@@ -26,6 +30,19 @@ const currentWindSpeed = computed(() => {
 const currentWeatherDescription = computed(() => {
     return props.city.weather.length > 0 ?  props.city.weather[0].description : null
 })
+
+let isModalOpen = ref(false)
+
+function openModal(){
+    isModalOpen = true
+}
+function closeModal(){
+    console.log('close')
+    isModalOpen = false
+}
+function deleteCard(id){
+    citiesStore.deleteCity(id)
+}
 </script>
 
 <template>
@@ -36,7 +53,14 @@ const currentWeatherDescription = computed(() => {
         <p>{{ currentTemp }} &deg;C</p>
         <p>Humidity: {{ currentHumidity }}%</p>
         <p>Wind: {{currentWindSpeed}}m/s</p>
+        <button @click="openModal">delete</button>
     </div>
+    <ModalWindow :open="isModalOpen"
+                 @close-modal="closeModal">
+        <p>Are you sure?</p>
+        <button @click="deleteCard(city.id)">yes</button>
+        <button>cancel</button>
+    </ModalWindow>
 </template>
 
 <style scoped>

@@ -6,7 +6,8 @@ export const useCitiesStore = defineStore('cities', {
         addCity(city) {
             this.cities.push(city)
         },
-        deleteCity(index){
+        deleteCity(id){
+            const index = this.cities.findIndex(city => city.id === id)
             this.cities.splice(index, 1)
         },
         replaceDefaultCity(city){
