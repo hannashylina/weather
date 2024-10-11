@@ -18,11 +18,11 @@ let citiesDropdownGeo = reactive([])
 const citiesList = reactive({data: []})
 const isCitiesListNotEmpty = computed(() => citiesList.data.length > 0)
 
-const defaultCity = reactive({data: null})
-const defaultCityChart = reactive({data: null})
+const defaultCity = reactive({ data: null })
+const defaultCityChart = reactive({ data: null })
 
-const activeCity = reactive({data: null})
-const activeCityChart = reactive({data: null})
+const activeCity = reactive({ data: null })
+const activeCityChart = reactive({ data: null })
 
 const isActiveCity = computed(() => {
     return !!activeCity.data ?? !!defaultCity.data
