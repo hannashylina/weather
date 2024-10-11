@@ -1,14 +1,24 @@
 <script setup>
 import { computed } from "vue"
+import { useCitiesStore } from './stores/cities'
+import { useModalStore } from './stores/modal'
 import CityCard from "./CityCard.vue"
 import AddCard from "./AddCard.vue"
-import { useCitiesStore } from './stores/cities'
+import ModalWindow from "./ModalWindow.vue";
+import CitiesForm from "@/components/CitiesForm.vue";
+
+
 const citiesStore = useCitiesStore()
+const modalStore = useModalStore()
 
 const MAX_CARDS_NUMBER = 5
 const isCardsNumberLessThanMax = computed(() => {
     return citiesStore.cities.length < MAX_CARDS_NUMBER
 })
+
+function addCard() {
+    modalStore.openModal()
+}
 
 </script>
 
@@ -16,7 +26,10 @@ const isCardsNumberLessThanMax = computed(() => {
     <CityCard v-for="city in citiesStore.cities"
               :city="city"
               :key="city.id"></CityCard>
-    <AddCard v-if="isCardsNumberLessThanMax"></AddCard>
+    <button @click="addCard()" v-if="isCardsNumberLessThanMax">+</button>
+    <ModalWindow>
+        <CitiesForm></CitiesForm>
+    </ModalWindow>
 </template>
 
 <style scoped>

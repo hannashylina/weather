@@ -62,4 +62,11 @@
   height: 400px;
 }
 
+.modal {
+  display: none;
+  &.open {
+    display: block;
+  }
+}
+
 

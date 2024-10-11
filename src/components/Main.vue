@@ -1,6 +1,7 @@
 <script setup>
-import { ref, watch, reactive, computed, onMounted } from 'vue'
 import axios from 'axios'
+import { ref, watch, reactive, computed, onMounted } from 'vue'
+import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
 import TemperatureChart from "./TemperatureChart.vue"
 import CitiesForm from "./CitiesForm.vue";
@@ -8,9 +9,8 @@ import CitiesForm from "./CitiesForm.vue";
 
 const hourlyForecastApiURL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FORECAST_API_URL
 
-
 // cities cards
-import { useCitiesStore } from './stores/cities'
+
 const citiesStore = useCitiesStore()
 const isCitiesListNotEmpty = computed(() => citiesStore.cities.length > 0)
 
