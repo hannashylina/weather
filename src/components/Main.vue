@@ -4,7 +4,7 @@ import { ref, watch, reactive, computed, onMounted } from 'vue'
 import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
 import TemperatureChart from "./TemperatureChart.vue"
-import CitiesForm from "./CitiesForm.vue";
+import SearchForm from "./SearchFrom.vue";
 
 
 const hourlyForecastApiURL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FORECAST_API_URL
@@ -47,7 +47,7 @@ watch(defaultCity, async (newDefaultCity) => {
 
 <template>
     <section>
-        <CitiesForm></CitiesForm>
+        <SearchForm :action="'default'"></SearchForm>
     </section>
 
     <section class="city-wrapper">

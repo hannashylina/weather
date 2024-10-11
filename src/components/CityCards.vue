@@ -5,7 +5,7 @@ import { useModalStore } from './stores/modal'
 import CityCard from "./CityCard.vue"
 import AddCard from "./AddCard.vue"
 import ModalWindow from "./ModalWindow.vue";
-import CitiesForm from "@/components/CitiesForm.vue";
+import CitiesForm from "@/components/SearchFrom.vue";
 
 
 const citiesStore = useCitiesStore()
@@ -28,7 +28,7 @@ function addCard() {
               :key="city.id"></CityCard>
     <button @click="addCard()" v-if="isCardsNumberLessThanMax">+</button>
     <ModalWindow>
-        <CitiesForm></CitiesForm>
+        <CitiesForm :action="'add'"></CitiesForm>
     </ModalWindow>
 </template>
 

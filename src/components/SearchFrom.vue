@@ -1,6 +1,6 @@
 <script setup>
-import {onMounted, reactive, ref, watch} from "vue";
 import axios from "axios";
+import { onMounted, reactive, ref, watch } from "vue";
 import { useCitiesStore } from './stores/cities'
 
 const citiesStore = useCitiesStore()
@@ -13,10 +13,22 @@ const cityQuery = ref('')
 let isCitiesDropdownOpen = ref(false)
 let citiesDropdownGeo = reactive({ data: [] })
 
-function changeDefaultCity(city) {
+const props = defineProps({
+    action: String
+})
+
+function getCityData(city) {
     axios.get(`${CURRENT_WEATHER_URL}?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`)
         .then(res => {
-            citiesStore.replaceDefaultCity(res.data)
+            switch (props.action){
+                case 'add':
+                    citiesStore.addCity(res.data)
+                    break
+                case 'default':
+                    citiesStore.replaceDefaultCity(res.data)
+                    break
+                default:
+            }
             //   getHourlyForecast(res.data)
             isCitiesDropdownOpen.value = false
         })
@@ -35,13 +47,13 @@ watch(cityQuery, async (newCityQuery) => {
 })
 
 onMounted(() => {
-    if ("geolocation" in navigator) {
+    if (props.action === 'default' && "geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((location) => {
             const city = {
                 lat: location.coords.latitude,
                 lon: location.coords.longitude
             }
-            changeDefaultCity(city)
+            getCityData(city)
         })
 
     }
@@ -52,7 +64,7 @@ onMounted(() => {
     <form class="cities-form">
         <input class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
         <div class="cities-dropdown" v-if="isCitiesDropdownOpen">
-            <button @click.prevent="changeDefaultCity(city)"
+            <button @click.prevent="getCityData(city)"
                     class="cities-input-button"
                     type="button"
                     v-for="city in citiesDropdownGeo.data">
