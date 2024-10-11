@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+
 const props = defineProps({
     open: Boolean
 })
@@ -14,8 +15,13 @@ function closeModal(){
 
 <template>
     <div :class="['modal', { open: isModalOpen }]">
-        <button @click="closeModal">x</button>
-        <slot>Modal window</slot>
+        <div class="modal-inner">
+            <button class="modal-close"
+                    type="button"
+                    @click="closeModal">&times;</button>
+            <slot>Modal window</slot>
+        </div>
+
     </div>
 
 </template>

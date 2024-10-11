@@ -4,7 +4,7 @@ import { useCitiesStore } from './stores/cities'
 import CityCard from "./CityCard.vue"
 import AddCard from "./AddCard.vue"
 import ModalWindow from "./ModalWindow.vue";
-import CitiesForm from "./SearchFrom.vue";
+import SearchFrom from "./SearchFrom.vue";
 
 
 const citiesStore = useCitiesStore()
@@ -17,22 +17,23 @@ const isCardsNumberLessThanMax = computed(() => {
 let isModalOpen = ref(false)
 
 function openModal(){
-    isModalOpen = true
+    isModalOpen.value = true
 }
 function closeModal(){
-    isModalOpen = false
+    isModalOpen.value = false
 }
 </script>
 
 <template>
-    <CityCard v-for="city in citiesStore.cities"
+    <CityCard v-for="(city, index) in citiesStore.cities"
               :city="city"
+              :index="index"
               :key="city.id"></CityCard>
     <button @click="openModal()"
             v-if="isCardsNumberLessThanMax">+</button>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
-        <CitiesForm :action="'add'"></CitiesForm>
+        <SearchFrom :action="'add'" ></SearchFrom>
     </ModalWindow>
 </template>
 

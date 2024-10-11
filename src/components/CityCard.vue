@@ -8,7 +8,8 @@ const ICON_URL = import.meta.env.VITE_OPEN_WEATHER_ICON_URL
 const citiesStore = useCitiesStore()
 
 const props = defineProps({
-    city: Object
+    city: Object,
+    index: Number
 })
 
 const currentTemp = computed(() => {
@@ -31,14 +32,17 @@ const currentWeatherDescription = computed(() => {
     return props.city.weather.length > 0 ?  props.city.weather[0].description : null
 })
 
+const isNotDefaultCard = computed(() => {
+    return props.index !== 0
+})
+
 let isModalOpen = ref(false)
 
 function openModal(){
-    isModalOpen = true
+    isModalOpen.value = true
 }
 function closeModal(){
-    console.log('close')
-    isModalOpen = false
+    isModalOpen.value = false
 }
 function deleteCard(id){
     citiesStore.deleteCity(id)
@@ -53,13 +57,22 @@ function deleteCard(id){
         <p>{{ currentTemp }} &deg;C</p>
         <p>Humidity: {{ currentHumidity }}%</p>
         <p>Wind: {{currentWindSpeed}}m/s</p>
-        <button @click="openModal">delete</button>
+        <button v-if="isNotDefaultCard"
+                class="city-card-delete"
+                @click="openModal">delete city info</button>
     </div>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
-        <p>Are you sure?</p>
-        <button @click="deleteCard(city.id)">yes</button>
-        <button>cancel</button>
+        <h3>Are you sure you want to delete city info?</h3>
+        <div class="buttons-row">
+            <button type="button"
+                    class="button button-cancel"
+                    @click="closeModal">cancel</button>
+            <button type="button"
+                    class="button button-confirm"
+                    @click="deleteCard(city.id)">yes</button>
+        </div>
+
     </ModalWindow>
 </template>
 
