@@ -59,7 +59,8 @@ function deleteCard(id){
         <p>Wind: {{currentWindSpeed}}m/s</p>
         <button v-if="isNotDefaultCard"
                 class="city-card-delete"
-                @click="openModal">delete city info</button>
+                type="button"
+                @click="openModal">Delete city info</button>
     </div>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
@@ -67,10 +68,10 @@ function deleteCard(id){
         <div class="buttons-row">
             <button type="button"
                     class="button button-cancel"
-                    @click="closeModal">cancel</button>
+                    @click="closeModal">Cancel</button>
             <button type="button"
                     class="button button-confirm"
-                    @click="deleteCard(city.id)">yes</button>
+                    @click="deleteCard(city.id)">Yes</button>
         </div>
 
     </ModalWindow>

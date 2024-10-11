@@ -30,7 +30,10 @@ function closeModal(){
               :index="index"
               :key="city.id"></CityCard>
     <button @click="openModal()"
-            v-if="isCardsNumberLessThanMax">+</button>
+            class="add-city-button"
+            v-if="isCardsNumberLessThanMax">
+        Add new city
+    </button>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
         <SearchFrom :action="'add'" ></SearchFrom>
