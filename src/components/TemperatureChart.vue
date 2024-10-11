@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import Chart from 'chart.js/auto';
+
 const props = defineProps({
     data: Object
 })

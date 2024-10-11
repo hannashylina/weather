@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, reactive, computed } from 'vue'
+import { ref, watch, reactive, computed, onMounted } from 'vue'
 import axios from 'axios'
 import CityCard from "./CityCard.vue"
 import TemperatureChart from "./TemperatureChart.vue";
@@ -57,6 +57,19 @@ watch(cityQuery, async (newCityQuery) => {
 
 watch(activeCity, async (newActiveCity) => {
     console.log(newActiveCity)
+})
+
+onMounted(() => {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((location) => {
+            const city = {
+                lat: location.coords.latitude,
+                lon: location.coords.longitude
+            }
+            changeActiveCity(city)
+        })
+
+    }
 })
 
 
