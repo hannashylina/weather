@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 
 export const useCitiesStore = defineStore('cities', {
-    state: () => ({ cities: [] }),
+    state: () => ({
+        cities: [],
+        activeCity: {},
+    }),
     actions: {
         addCity(city) {
             this.cities.push(city)
@@ -12,6 +15,9 @@ export const useCitiesStore = defineStore('cities', {
         },
         replaceDefaultCity(city){
             this.cities.splice(0, 1, city)
+        },
+        setActiveCity(city){
+            Object.assign(this.activeCity, city);
         }
     },
 })
