@@ -15,8 +15,9 @@ let isCitiesDropdownOpen = ref(false)
 let citiesDropdownGeo = reactive([])
 
 // cities cards
-const citiesList = reactive({data: []})
-const isCitiesListNotEmpty = computed(() => citiesList.data.length > 0)
+import { useCitiesStore } from './stores/cities'
+const citiesStore = useCitiesStore()
+const isCitiesListNotEmpty = computed(() => citiesStore.cities.length > 0)
 
 const defaultCity = reactive({ data: null })
 const defaultCityChart = reactive({ data: null })
@@ -35,8 +36,8 @@ const isActiveCityChart = computed(() => {
 function changeDefaultCity(city) {
     axios.get(`${currentWeatherApiURL}?lat=${city.lat}&lon=${city.lon}&appid=${apiKey}`)
         .then(res => {
-            defaultCity.data = res.data
-            getHourlyForecast(res.data)
+            citiesStore.replaceDefaultCity(res.data)
+         //   getHourlyForecast(res.data)
             isCitiesDropdownOpen.value = false
         })
 }
@@ -62,8 +63,7 @@ watch(cityQuery, async (newCityQuery) => {
 })
 
 watch(defaultCity, async (newDefaultCity) => {
-    citiesList.data.pop()
-    citiesList.data.splice(-1, 1, newDefaultCity.data)
+    citiesStore.replaceDefaultCity(newDefaultCity)
 })
 
 onMounted(() => {
@@ -78,8 +78,6 @@ onMounted(() => {
 
     }
 })
-
-
 </script>
 
 <template>
@@ -102,8 +100,7 @@ onMounted(() => {
     <section class="city-wrapper">
         <TemperatureChart v-if="isActiveCityChart"
                           :data="defaultCityChart.data.list"></TemperatureChart>
-        <CityCards v-if="isCitiesListNotEmpty"
-                   :cities="citiesList.data"></CityCards>
+        <CityCards v-if="isCitiesListNotEmpty"></CityCards>
     </section>
 
 
