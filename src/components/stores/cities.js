@@ -24,8 +24,19 @@ export const useCitiesStore = defineStore('cities', {
         setDisplay(mode){
             this.display = mode
         },
+        getFavoriteCities(){
+            if(localStorage.getItem('favorites')){
+                this.favCities = localStorage.getItem('favorites')
+            }
+        },
         addFavoriteCity(city){
-            this.favCities.push(city)
+            this.favCities.push({...city})
+            localStorage.setItem('favorites', this.favCities)
+        },
+        removeFavoriteCity(city){
+            const index = this.favCities.findIndex(fav => city.id === fav.id)
+            this.favCities.splice(index, 1)
+            localStorage.setItem('favorites', this.favCities)
         }
     },
 })

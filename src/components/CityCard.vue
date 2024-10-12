@@ -37,10 +37,20 @@ const isNotDefaultCard = computed(() => {
 })
 
 const isFavsButtonDisplayed = computed(() => {
-    const index = citiesStore.favCities.findIndex(city => {
-        return city.id === props.city.id
-    })
-    return citiesStore.display === 'all' && index !== -1
+    return citiesStore.display === 'all'
+})
+
+const isCityInFavorites = computed(() => {
+    if(citiesStore.favCities.length > 0){
+        let index = citiesStore.favCities.findIndex(city => {
+            return city.id === props.city.id
+        })
+        return index > -1
+    }
+    else {
+        return false
+    }
+
 })
 
 let isModalOpen = ref(false)
@@ -58,6 +68,10 @@ function deleteCard(id){
 function addToFavorites(){
     citiesStore.addFavoriteCity(props.city)
 }
+
+function removeFromFavorites(){
+    citiesStore.removeFavoriteCity(props.city)
+}
 </script>
 
 <template>
@@ -68,11 +82,19 @@ function addToFavorites(){
         <p>{{ currentTemp }} &deg;C</p>
         <p>Humidity: {{ currentHumidity }}%</p>
         <p>Wind: {{currentWindSpeed}}m/s</p>
-        <button type="button"
-                v-if="isFavsButtonDisplayed"
-                @click="addToFavorites">
-            Add to favorites
-        </button>
+        <div v-if="isFavsButtonDisplayed">
+            <button type="button"
+                    v-if="isCityInFavorites"
+                    @click="removeFromFavorites">
+                Remove from favorites
+            </button>
+            <button type="button"
+                    v-else
+                    @click="addToFavorites">
+                Add to favorites
+            </button>
+        </div>
+
         <button v-if="isNotDefaultCard"
                 class="city-card-delete"
                 type="button"

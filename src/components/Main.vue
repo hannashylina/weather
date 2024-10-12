@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, computed } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
 import ToggleDisplay from "./ToggleDisplay.vue"
@@ -9,6 +9,10 @@ import SearchForm from "./SearchFrom.vue"
 const citiesStore = useCitiesStore()
 const isCitiesListNotEmpty = computed(() => citiesStore.cities.length > 0)
 const isActiveCity = computed(() => Object.keys(citiesStore.activeCity).length > 0)
+
+onMounted(() => {
+    citiesStore.getFavoriteCities()
+})
 
 </script>
 
