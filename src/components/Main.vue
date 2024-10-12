@@ -2,14 +2,14 @@
 import { reactive, computed } from 'vue'
 import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
-import TemperatureChart from "./TemperatureChart.vue"
+import TemperatureForecast from "./TemperatureForecast.vue"
 import SearchForm from "./SearchFrom.vue"
 
 // cities cards
 
 const citiesStore = useCitiesStore()
 const isCitiesListNotEmpty = computed(() => citiesStore.cities.length > 0)
-const isActiveCity = computed(() => !!citiesStore.activeCity)
+const isActiveCity = computed(() => Object.keys(citiesStore.activeCity).length > 0)
 
 </script>
 
@@ -20,7 +20,7 @@ const isActiveCity = computed(() => !!citiesStore.activeCity)
 
     <section class="city-wrapper">
         <CityCards v-if="isCitiesListNotEmpty"></CityCards>
-        <TemperatureChart v-if="isActiveCity"></TemperatureChart>
+        <TemperatureForecast v-if="isActiveCity"></TemperatureForecast>
     </section>
 
 

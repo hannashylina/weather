@@ -10,6 +10,8 @@ const CURRENT_WEATHER_URL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_UR
 const GEO_API_URL = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
 const MAX_SEARCH_RESULTS_NUMBER = 5
 
+const activeCity = citiesStore.activeCity
+
 const cityQuery = ref('')
 let isCitiesDropdownOpen = ref(false)
 let citiesDropdownGeo = reactive({ data: [] })
@@ -27,6 +29,7 @@ function getCityData(city) {
                     break
                 case 'default':
                     citiesStore.replaceDefaultCity(res.data)
+                    citiesStore.setActiveCity(res.data)
                     break
                 default:
             }
