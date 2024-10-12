@@ -24,7 +24,7 @@ export const useCitiesStore = defineStore('cities', {
         setDisplay(mode){
             this.display = mode
         },
-        addFavoriteCity(){
+        addFavoriteCity(city){
             this.favCities.push(city)
         }
     },
