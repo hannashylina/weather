@@ -37,7 +37,7 @@ function getCityData(city) {
         })
 }
 
-watch(cityQuery, async (newCityQuery) => {
+watch(cityQuery, (newCityQuery) => {
     if (newCityQuery.length > 0) {
         axios.get(`${GEO_API_URL}?q=${newCityQuery}&limit=${MAX_SEARCH_RESULTS_NUMBER}&appid=${API_KEY}`)
             .then(resp => {
@@ -65,16 +65,18 @@ onMounted(() => {
 
 <template>
     <form class="cities-form">
-        <input class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
-        <div class="cities-dropdown" v-if="isCitiesDropdownOpen">
-            <button @click.prevent="getCityData(city)"
-                    class="cities-input-button"
-                    type="button"
-                    v-for="city in citiesDropdownGeo.data">
-                {{ city.name }},
-                <span v-if="city.state">{{ city.state }},</span>
-                {{ city.country }}
-            </button>
+        <div class="cities-dropdown-wrap">
+            <input name="cities" class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
+            <div class="cities-dropdown" v-if="isCitiesDropdownOpen">
+                <button @click.prevent="getCityData(city)"
+                        class="cities-input-button"
+                        type="button"
+                        v-for="city in citiesDropdownGeo.data">
+                    {{ city.name }},
+                    <span v-if="city.state">{{ city.state }},</span>
+                    {{ city.country }}
+                </button>
+            </div>
         </div>
     </form>
 </template>

@@ -4,6 +4,8 @@ export const useCitiesStore = defineStore('cities', {
     state: () => ({
         cities: [],
         activeCity: {},
+        display: '',
+        favCities: []
     }),
     actions: {
         addCity(city) {
@@ -18,6 +20,12 @@ export const useCitiesStore = defineStore('cities', {
         },
         setActiveCity(city){
             Object.assign(this.activeCity, city);
+        },
+        setDisplay(mode){
+            this.display = mode
+        },
+        addFavoriteCity(){
+            this.favCities.push(city)
         }
     },
 })
