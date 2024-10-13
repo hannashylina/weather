@@ -37,10 +37,6 @@ const isNotDefaultCard = computed(() => {
 })
 
 const isDeleteButtonDisplayed = computed(() => {
-    return isDeleteButtonDisplayed && !isFavsButtonDisplayed
-})
-
-const isFavsButtonDisplayed = computed(() => {
     return citiesStore.display === 'all'
 })
 
@@ -94,8 +90,7 @@ function removeFromFavorites(){
         <p class="city-card-temperature">{{ currentTemp }} &deg;C</p>
         <p class="city-card-humidity">Humidity: {{ currentHumidity }}%</p>
         <p class="city-card-wind">Wind: {{currentWindSpeed}}m/s</p>
-        <div class="city-card-favorites"
-             v-if="isFavsButtonDisplayed">
+        <div class="city-card-favorites">
             <button type="button"
                     v-if="isCityInFavorites"
                     class="button-favorites"
