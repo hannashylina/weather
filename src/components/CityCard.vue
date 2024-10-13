@@ -36,6 +36,10 @@ const isNotDefaultCard = computed(() => {
     return props.index !== 0
 })
 
+const isDeleteButtonDisplayed = computed(() => {
+    return isDeleteButtonDisplayed && !isFavsButtonDisplayed
+})
+
 const isFavsButtonDisplayed = computed(() => {
     return citiesStore.display === 'all'
 })
@@ -108,7 +112,7 @@ function removeFromFavorites(){
             </button>
         </div>
 
-        <button v-if="isNotDefaultCard"
+        <button v-if="isDeleteButtonDisplayed"
                 class="city-card-delete"
                 type="button"
                 @click="openModal">Delete city info</button>
