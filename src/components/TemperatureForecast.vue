@@ -26,6 +26,14 @@ const isForecastData = computed(() => {
     return forecastData.data.length > 0
 })
 
+const isOneDayChart = computed(() => {
+    return chartDisplayMode.value === 'one'
+})
+
+const isFiveDaysChart = computed(() => {
+    return chartDisplayMode.value === 'five'
+})
+
 const labelsOneDay = computed(() => {
     return forecastOneDayDisplayData.value.map(item => {
         const date = new Date(item.dt * 1000); // convert seconds to milliseconds for unix date format
@@ -72,12 +80,14 @@ onMounted(() => {
         </select>
     </label>
 
-    <Chart v-if="isForecastData"
+    <Chart v-show="isOneDayChart"
+           v-if="isForecastData"
            :labels="labelsOneDay"
            id="one"
            :temperatures="temperaturesOneDay"></Chart>
 
-    <Chart v-if="isForecastData"
+    <Chart v-show="isFiveDaysChart"
+           v-if="isForecastData"
            :labels="labelsFiveDays"
            id="five"
            :temperatures="temperaturesFiveDays"></Chart>
