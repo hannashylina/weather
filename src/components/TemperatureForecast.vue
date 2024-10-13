@@ -1,7 +1,7 @@
 <script setup>
 import axios from "axios";
 import Chart from './Chart.vue'
-import { onMounted, computed, reactive } from 'vue'
+import { onMounted, computed, reactive, ref } from 'vue'
 import { useCitiesStore } from './stores/cities'
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY
@@ -10,30 +10,48 @@ const HOURLY_FORECAST_API_URL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FOR
 const citiesStore = useCitiesStore()
 const activeCity = citiesStore.activeCity
 
+const chartDisplayMode = ref('one')
+
 const forecastData = reactive({ data: [] })
 
-let forecastDisplayData = computed(() => {
+let forecastOneDayDisplayData = computed(() => {
     return forecastData.data.length > 0 ? forecastData.data.slice(0, 8) : []; // t°C entries for the next day
 })
 
-const isForecastDisplayData = computed(() => {
-    return forecastDisplayData.value.length > 0
+let forecastFiveDaysDisplayData = computed(() => {
+    return forecastData.data.length > 0 ? forecastData.data : []; // t°C entries for the next day
 })
 
-const labels = computed(() => {
-    return forecastDisplayData.value.map(item => {
+const isForecastData = computed(() => {
+    return forecastData.data.length > 0
+})
+
+const labelsOneDay = computed(() => {
+    return forecastOneDayDisplayData.value.map(item => {
         const date = new Date(item.dt * 1000); // convert seconds to milliseconds for unix date format
         const minutes = date.getMinutes() === 0 ? '00' : date.getMinutes()
-        return `${date.getHours()}:${minutes}`;
+        return `${date.getHours()}:${minutes}`
     });
 })
 
-const temperatures = computed(() => {
-    return forecastDisplayData.value.map(item => Math.round(item.main.temp - 273.15)) // convert Kelvin to Celsius
+const temperaturesOneDay = computed(() => {
+    return forecastOneDayDisplayData.value.map(item => Math.round(item.main.temp))
+})
+
+const labelsFiveDays = computed(() => {
+    return forecastFiveDaysDisplayData.value.map(item => {
+        const date = new Date(item.dt * 1000); // convert seconds to milliseconds for unix date format
+        const minutes = date.getMinutes() === 0 ? '00' : date.getMinutes()
+        return `${date.getHours()}:${minutes}`
+    });
+})
+
+const temperaturesFiveDays = computed(() => {
+    return forecastFiveDaysDisplayData.value.map(item => Math.round(item.main.temp))
 })
 
 function getHourlyForecast(city) {
-    axios.get(`${HOURLY_FORECAST_API_URL}?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${API_KEY}`)
+    axios.get(`${HOURLY_FORECAST_API_URL}?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${API_KEY}&units=metric`)
         .then(res => {
             //  console.log(res)
             forecastData.data = res.data.list
@@ -46,9 +64,23 @@ onMounted(() => {
 </script>
 
 <template>
-    <Chart v-if="isForecastDisplayData"
-           :labels="labels"
-           :temperatures="temperatures"></Chart>
+    <label>
+        Select period of temperatures displayed
+        <select v-model="chartDisplayMode">
+            <option selected value="one">1 day</option>
+            <option value="five">5 days</option>
+        </select>
+    </label>
+
+    <Chart v-if="isForecastData"
+           :labels="labelsOneDay"
+           id="one"
+           :temperatures="temperaturesOneDay"></Chart>
+
+    <Chart v-if="isForecastData"
+           :labels="labelsFiveDays"
+           id="five"
+           :temperatures="temperaturesFiveDays"></Chart>
 </template>
 
 <style scoped>
