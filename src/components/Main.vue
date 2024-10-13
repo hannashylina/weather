@@ -21,13 +21,13 @@ onMounted(() => {
         <SearchForm :action="'default'"></SearchForm>
     </section>
     <section class="row">
-        <div class="col col-50">
+        <div class="col col-60">
             <DisplayToggle></DisplayToggle>
             <div class="cities-wrapper">
                 <CityCards v-if="isCitiesListNotEmpty"></CityCards>
             </div>
         </div>
-        <div class="col col-50">
+        <div class="col col-40">
             <TemperatureForecast v-if="isActiveCity"></TemperatureForecast>
         </div>
     </section>
