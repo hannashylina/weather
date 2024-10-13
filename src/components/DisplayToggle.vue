@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <fieldset class="cities-display">
+    <fieldset class="cities-display-toggle">
         <label>
             All
             <input type="radio" name="display" checked value="all" v-model="displayMode">
