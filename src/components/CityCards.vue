@@ -25,12 +25,9 @@ const displayCities = computed(() => {
 })
 
 const MAX_CARDS_NUMBER = 5
+
 const isCardsNumberLessThanMax = computed(() => {
     return citiesStore.cities.length < MAX_CARDS_NUMBER
-})
-
-const isDisplayAddButton = computed(() => {
-    return citiesStore.display === 'all' && isCardsNumberLessThanMax
 })
 
 let isModalOpen = ref(false)
@@ -48,11 +45,14 @@ function closeModal(){
               :city="city"
               :index="index"
               :key="city.id"></CityCard>
-    <button @click="openModal()"
-            class="add-city-button"
-            v-if="isDisplayAddButton">
-        Add new city
-    </button>
+    <div v-if="citiesStore.display === 'all'">
+        <button @click="openModal()"
+                class="add-city-button"
+                v-if="isCardsNumberLessThanMax">
+            Add new city
+        </button>
+    </div>
+
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
         <SearchFrom :action="'add'" @close-modal="closeModal"></SearchFrom>
