@@ -4,22 +4,34 @@ import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
 import DisplayToggle from "./DisplayToggle.vue"
 import TemperatureForecast from "./TemperatureForecast.vue"
-import SearchForm from "./SearchFrom.vue"
+import axios from "axios";
+
+const CURRENT_WEATHER_URL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_URL
+const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY
 
 const citiesStore = useCitiesStore()
 const isCitiesListNotEmpty = computed(() => citiesStore.cities.length > 0)
 const isActiveCity = computed(() => Object.keys(citiesStore.activeCity).length > 0)
 
 onMounted(() => {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((location) => {
+            const city = {
+                lat: location.coords.latitude,
+                lon: location.coords.longitude
+            }
+            axios.get(`${CURRENT_WEATHER_URL}?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`)
+                .then(res => {
+                    citiesStore.replaceDefaultCity(res.data)
+                    citiesStore.setActiveCity(res.data)
+                })
+        })
+    }
     citiesStore.getFavoriteCities()
 })
-
 </script>
 
 <template>
-    <section>
-        <SearchForm :action="'default'"></SearchForm>
-    </section>
     <section class="row">
         <div class="col col-60">
             <DisplayToggle></DisplayToggle>

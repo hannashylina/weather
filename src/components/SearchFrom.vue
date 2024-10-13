@@ -16,23 +16,10 @@ const cityQuery = ref('')
 let isCitiesDropdownOpen = ref(false)
 let citiesDropdownGeo = reactive({ data: [] })
 
-const props = defineProps({
-    action: String
-})
-
 function getCityData(city) {
     axios.get(`${CURRENT_WEATHER_URL}?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`)
         .then(res => {
-            switch (props.action){
-                case 'add':
-                    citiesStore.addCity(res.data)
-                    break
-                case 'default':
-                    citiesStore.replaceDefaultCity(res.data)
-                    citiesStore.setActiveCity(res.data)
-                    break
-                default:
-            }
+            citiesStore.addCity(res.data)
             isCitiesDropdownOpen.value = false
         })
 }
@@ -47,19 +34,6 @@ watch(cityQuery, (newCityQuery) => {
             })
     }
 
-})
-
-onMounted(() => {
-    if (props.action === 'default' && "geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((location) => {
-            const city = {
-                lat: location.coords.latitude,
-                lon: location.coords.longitude
-            }
-            getCityData(city)
-        })
-
-    }
 })
 </script>
 

@@ -37,7 +37,7 @@ const isNotDefaultCard = computed(() => {
 })
 
 const isDeleteButtonDisplayed = computed(() => {
-    return citiesStore.display === 'all'
+    return citiesStore.display === 'all' && isNotDefaultCard
 })
 
 const isCityInFavorites = computed(() => {
