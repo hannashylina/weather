@@ -72,25 +72,28 @@ onMounted(() => {
 </script>
 
 <template>
-    <label>
-        Select period of temperatures displayed
-        <select v-model="chartDisplayMode">
-            <option selected value="one">1 day</option>
-            <option value="five">5 days</option>
-        </select>
-    </label>
+    <aside>
+        <label class="period-label">
+            Show forecast for
+            <select v-model="chartDisplayMode"
+                    class="period-select">
+                <option selected value="one">1 day</option>
+                <option value="five">5 days</option>
+            </select>
+        </label>
 
-    <Chart v-show="isOneDayChart"
-           v-if="isForecastData"
-           :labels="labelsOneDay"
-           id="one"
-           :temperatures="temperaturesOneDay"></Chart>
+        <Chart v-show="isOneDayChart"
+               v-if="isForecastData"
+               :labels="labelsOneDay"
+               id="one"
+               :temperatures="temperaturesOneDay"></Chart>
 
-    <Chart v-show="isFiveDaysChart"
-           v-if="isForecastData"
-           :labels="labelsFiveDays"
-           id="five"
-           :temperatures="temperaturesFiveDays"></Chart>
+        <Chart v-show="isFiveDaysChart"
+               v-if="isForecastData"
+               :labels="labelsFiveDays"
+               id="five"
+               :temperatures="temperaturesFiveDays"></Chart>
+    </aside>
 </template>
 
 <style scoped>
