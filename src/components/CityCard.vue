@@ -77,22 +77,34 @@ function removeFromFavorites(){
 
 <template>
     <div class="city-card">
-        <h2>{{ city.name }}</h2>
-        <p>{{ currentWeatherDescription }}</p>
-        <img :src="currentIcon" />
-        <p>{{ currentTemp }} &deg;C</p>
-        <p>Humidity: {{ currentHumidity }}%</p>
-        <p>Wind: {{currentWindSpeed}}m/s</p>
-        <div v-if="isFavsButtonDisplayed">
+        <h2 class="city-card-heading">
+            {{ city.name }}
+        </h2>
+        <p class="city-card-description">
+            {{ currentWeatherDescription }}
+        </p>
+        <img :src="currentIcon"
+             alt="icon"
+             class="city-card-icon"
+        />
+        <p class="city-card-temperature">{{ currentTemp }} &deg;C</p>
+        <p class="city-card-humidity">Humidity: {{ currentHumidity }}%</p>
+        <p class="city-card-wind">Wind: {{currentWindSpeed}}m/s</p>
+        <div class="city-card-favorites"
+             v-if="isFavsButtonDisplayed">
             <button type="button"
                     v-if="isCityInFavorites"
+                    class="button-favorites"
                     @click="removeFromFavorites">
-                Remove from favorites
+                &starf;
+                <span class="button-favorites__tooltip">Remove from favorites</span>
             </button>
             <button type="button"
                     v-else
+                    class="button-favorites"
                     @click="addToFavorites">
-                Add to favorites
+                &star;
+                <span class="button-favorites__tooltip">Add to favorites</span>
             </button>
         </div>
 
