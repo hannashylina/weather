@@ -5,18 +5,28 @@ export const useCitiesStore = defineStore('cities', {
         cities: [],
         activeCity: {},
         display: '',
-        favCities: []
+        favCities: [],
+        defaultCity: {}
     }),
     actions: {
+        getCities(){
+            if(localStorage.getItem('cities')){
+                this.cities = JSON.parse(localStorage.getItem('cities'))
+            }
+        },
         addCity(city) {
             this.cities.push(city)
+            localStorage.setItem('cities', JSON.stringify(this.cities))
         },
         deleteCity(id){
             const index = this.cities.findIndex(city => city.id === id)
             this.cities.splice(index, 1)
+            localStorage.setItem('cities', JSON.stringify(this.cities))
         },
-        replaceDefaultCity(city){
+        setDefaultCity(city){
             this.cities.splice(0, 1, city)
+            localStorage.setItem('cities', JSON.stringify(this.cities))
+            Object.assign(this.defaultCity, city);
         },
         setActiveCity(city){
             Object.assign(this.activeCity, city);

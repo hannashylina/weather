@@ -22,12 +22,13 @@ onMounted(() => {
             }
             axios.get(`${CURRENT_WEATHER_URL}?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`)
                 .then(res => {
-                    citiesStore.replaceDefaultCity(res.data)
+                    citiesStore.setDefaultCity(res.data)
                     citiesStore.setActiveCity(res.data)
                 })
         })
     }
     citiesStore.getFavoriteCities()
+    citiesStore.getCities()
 })
 </script>
 
