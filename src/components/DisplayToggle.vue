@@ -16,13 +16,23 @@ onMounted(() => {
 
 <template>
     <fieldset class="display-toggle">
-        <label>
+        <label :class="['display-toggle-label', {'active': displayMode === 'all' }]">
             All
-            <input type="radio" name="display" checked value="all" v-model="displayMode">
+            <input type="radio"
+                   name="display"
+                   checked
+                   value="all"
+                   class="display-toggle-input"
+                   v-model="displayMode">
         </label>
-        <label>
+        <label :class="['display-toggle-label', {'active': displayMode === 'fav' }]">
             Favorites
-            <input type="radio" name="display" value="fav" v-model="displayMode">
+            &starf;
+            <input type="radio"
+                   name="display"
+                   value="fav"
+                   class="display-toggle-input"
+                   v-model="displayMode">
         </label>
     </fieldset>
 </template>

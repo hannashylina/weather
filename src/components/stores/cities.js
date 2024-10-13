@@ -30,7 +30,7 @@ export const useCitiesStore = defineStore('cities', {
             }
         },
         addFavoriteCity(city){
-            this.favCities.push({...city})
+            this.favCities.push(city)
             localStorage.setItem('favorites', JSON.stringify(this.favCities))
         },
         removeFavoriteCity(city){

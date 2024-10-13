@@ -19,7 +19,7 @@ const displayCities = computed(() => {
             result = citiesStore.favCities
             break
         default:
-            result = citiesStore.favCities
+            result = citiesStore.cities
     }
     return result
 })
