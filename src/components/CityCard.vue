@@ -42,6 +42,7 @@ const isFavsButtonDisplayed = computed(() => {
 
 const isCityInFavorites = computed(() => {
     if(citiesStore.favCities.length > 0){
+        console.log(citiesStore.favCities)
         let index = citiesStore.favCities.findIndex(city => {
             return city.id === props.city.id
         })

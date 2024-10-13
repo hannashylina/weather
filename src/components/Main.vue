@@ -2,7 +2,7 @@
 import { onMounted, computed } from 'vue'
 import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
-import ToggleDisplay from "./ToggleDisplay.vue"
+import DisplayToggle from "./DisplayToggle.vue"
 import TemperatureForecast from "./TemperatureForecast.vue"
 import SearchForm from "./SearchFrom.vue"
 
@@ -22,7 +22,7 @@ onMounted(() => {
     </section>
     <section class="row">
         <div class="col col-50">
-            <ToggleDisplay></ToggleDisplay>
+            <DisplayToggle></DisplayToggle>
             <div class="cities-wrapper">
                 <CityCards v-if="isCitiesListNotEmpty"></CityCards>
             </div>
