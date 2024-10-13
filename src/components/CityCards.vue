@@ -55,7 +55,7 @@ function closeModal(){
     </button>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
-        <SearchFrom :action="'add'" ></SearchFrom>
+        <SearchFrom :action="'add'" @close-modal="closeModal"></SearchFrom>
     </ModalWindow>
 </template>
 

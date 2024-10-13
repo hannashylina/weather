@@ -12,6 +12,8 @@ const MAX_SEARCH_RESULTS_NUMBER = 5
 
 const activeCity = citiesStore.activeCity
 
+const emit = defineEmits(['close-modal'])
+
 const cityQuery = ref('')
 let isCitiesDropdownOpen = ref(false)
 let citiesDropdownGeo = reactive({ data: [] })
@@ -21,6 +23,7 @@ function getCityData(city) {
         .then(res => {
             citiesStore.addCity(res.data)
             isCitiesDropdownOpen.value = false
+            emit('close-modal')
         })
 }
 
