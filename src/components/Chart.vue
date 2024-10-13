@@ -16,8 +16,27 @@ onMounted(() => {
             datasets: [{
                 label: 'Temperatures',
                 data: props.temperatures,
-                borderWidth: 1
+                borderWidth: 1,
+                pointStyle: false,
+                lineTension: 0.2,
+                fill: true,
+                backgroundColor: '#cdddfa',
+                borderColor: '#74aaff'
             }]
+        },
+        options: {
+            scales: {
+                x: {
+                    grid: {
+                        display: false
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
         }
     });
 })
