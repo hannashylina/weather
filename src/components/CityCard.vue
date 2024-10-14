@@ -37,7 +37,7 @@ const isNotDefaultCard = computed(() => {
 })
 
 const isDeleteButtonDisplayed = computed(() => {
-    return citiesStore.display === 'all' && isNotDefaultCard
+    return citiesStore.display === 'all'
 })
 
 const isCityInFavorites = computed(() => {
@@ -113,11 +113,12 @@ function changeActiveCity(){
                 <span class="button-favorites__tooltip">Add to favorites</span>
             </button>
         </div>
-
-        <button v-if="isDeleteButtonDisplayed"
-                class="city-card-delete"
-                type="button"
-                @click.stop="openModal">Delete city info</button>
+        <div v-if="isDeleteButtonDisplayed">
+            <button v-if="isNotDefaultCard"
+                    class="city-card-delete"
+                    type="button"
+                    @click.stop="openModal">Delete city info</button>
+        </div>
     </div>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">
