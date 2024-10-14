@@ -78,6 +78,7 @@ onMounted(() => {
 
 <template>
     <aside>
+        <h2>{{activeCity.name}}</h2>
         <label class="period-label">
             Show forecast for
             <select v-model="chartDisplayMode"

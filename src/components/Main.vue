@@ -35,13 +35,13 @@ onMounted(() => {
 
 <template>
     <section class="row">
-        <div class="col col-60">
+        <div class="col col-60 col-sm-100">
             <DisplayToggle></DisplayToggle>
             <div class="cities-wrapper">
                 <CityCards v-if="isCitiesListNotEmpty"></CityCards>
             </div>
         </div>
-        <div class="col col-40">
+        <div class="col col-40 col-sm-100">
             <TemperatureForecast v-if="isActiveCity"></TemperatureForecast>
         </div>
     </section>

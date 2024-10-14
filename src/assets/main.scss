@@ -3,7 +3,7 @@
 #app {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 2rem 20px;
   font-weight: normal;
 }
 
@@ -37,6 +37,9 @@
 .row {
   display: flex;
   gap: 20px;
+  @media screen and (max-width: 767px) {
+    flex-direction: column-reverse;
+  }
 }
 
 .col-40 {
@@ -51,10 +54,25 @@
   width: 60%;
 }
 
+.col-sm-100 {
+  @media  screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
 .cities-wrapper {
   display: grid;
   grid-template-columns: 30% 30% 30%;
-  gap: 20px
+  gap: 20px;
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: 40% 40%;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 45% 45%;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 100%;
+  }
 }
 
 .city-card {
@@ -69,6 +87,23 @@
           "temperature temperature"
           "humidity humidity"
           "wind wind";
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+          "weather-icon"
+          "heading"
+          "description"
+          "temperature"
+          "humidity"
+          "wind";
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-areas:
+          "heading weather-icon"
+          "description weather-icon"
+          "temperature temperature"
+          "humidity humidity"
+          "wind wind";
+  }
   &.active {
     border-color: darkorange;
   }
