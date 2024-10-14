@@ -30,6 +30,10 @@ const isCardsNumberLessThanMax = computed(() => {
     return citiesStore.cities.length < MAX_CARDS_NUMBER
 })
 
+const isEmptyFavsDisplay = computed(() => {
+    return displayCities.value.length === 0
+})
+
 let isModalOpen = ref(false)
 
 function openModal(){
@@ -51,6 +55,9 @@ function closeModal(){
                 v-if="isCardsNumberLessThanMax">
             Add new city
         </button>
+    </div>
+    <div v-if="isEmptyFavsDisplay">
+        There are no favorite cities
     </div>
 
     <ModalWindow :open="isModalOpen"
