@@ -10,8 +10,6 @@ const CURRENT_WEATHER_URL = import.meta.env.VITE_OPEN_WEATHER_CURRENT_WEATHER_UR
 const GEO_API_URL = import.meta.env.VITE_OPEN_WEATHER_GEO_API_URL
 const MAX_SEARCH_RESULTS_NUMBER = 5
 
-const activeCity = citiesStore.activeCity
-
 const emit = defineEmits(['close-modal'])
 
 const cityQuery = ref('')
@@ -43,7 +41,12 @@ watch(cityQuery, (newCityQuery) => {
 <template>
     <form class="cities-form">
         <div class="cities-dropdown-wrap">
-            <input name="cities" class="cities-input" type="text" placeholder="Enter city..." v-model="cityQuery" />
+            <input name="cities"
+                   class="cities-input"
+                   type="text"
+                   placeholder="Enter city..."
+                   autocomplete="off"
+                   v-model="cityQuery" />
             <div class="cities-dropdown" v-if="isCitiesDropdownOpen">
                 <button @click.prevent="getCityData(city)"
                         class="cities-input-button"
