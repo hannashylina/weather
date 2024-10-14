@@ -7,6 +7,7 @@ import { storeToRefs } from "pinia";
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY
 const HOURLY_FORECAST_API_URL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FORECAST_API_URL
+const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 const citiesStore = useCitiesStore()
 const { activeCity } = storeToRefs(citiesStore)
@@ -47,16 +48,37 @@ const temperaturesOneDay = computed(() => {
     return forecastOneDayDisplayData.value.map(item => Math.round(item.main.temp))
 })
 
+const allDates = computed(() => {
+    const allDays = forecastFiveDaysDisplayData.value.map(item => {
+        return item.dt_txt.split(' ')[0]
+    })
+    let days = [];
+    allDays.forEach(day => {
+        if(days.indexOf(day) === -1){
+            days.push(day)
+        }
+    })
+    return days
+})
+
 const labelsFiveDays = computed(() => {
-    return forecastFiveDaysDisplayData.value.map(item => {
-        const date = new Date(item.dt * 1000); // convert seconds to milliseconds for unix date format
-        const minutes = date.getMinutes() === 0 ? '00' : date.getMinutes()
-        return `${date.getHours()}:${minutes}`
-    });
+    return allDates.value.map(date => {
+        let day = new Date(date).getDay()
+        return WEEK_DAYS[day]
+    })
 })
 
 const temperaturesFiveDays = computed(() => {
-    return forecastFiveDaysDisplayData.value.map(item => Math.round(item.main.temp))
+    let result = []
+    allDates.value.forEach(date => {
+        let temps = forecastFiveDaysDisplayData.value.filter(val => val.dt_txt.startsWith(date))
+            .map(val => val.main.temp)
+        let tempsSum = 0;
+        let sum = temps.reduce((sum, current) => sum + current, tempsSum)
+        let average = sum / temps.length
+        result.push(average)
+    })
+    return result
 })
 
 watch(activeCity, (newCity) => {
