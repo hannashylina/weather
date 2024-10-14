@@ -53,6 +53,10 @@ const isCityInFavorites = computed(() => {
 
 })
 
+const isCityActive = computed(() => {
+    return citiesStore.activeCity.id === props.city.id
+})
+
 let isModalOpen = ref(false)
 
 function openModal(){
@@ -72,11 +76,15 @@ function addToFavorites(){
 function removeFromFavorites(){
     citiesStore.removeFavoriteCity(props.city)
 }
+
+function changeActiveCity(){
+    citiesStore.setActiveCity(props.city)
+}
 </script>
 
 <template>
-    <div class="city-card">
-        <h2 class="city-card-heading">
+    <div :class="['city-card', {active: isCityActive}]">
+        <h2 class="city-card-heading" @click.stop="changeActiveCity">
             {{ city.name }}
         </h2>
         <p class="city-card-description">
@@ -93,14 +101,14 @@ function removeFromFavorites(){
             <button type="button"
                     v-if="isCityInFavorites"
                     class="button-favorites"
-                    @click="removeFromFavorites">
+                    @click.stop="removeFromFavorites">
                 &starf;
                 <span class="button-favorites__tooltip">Remove from favorites</span>
             </button>
             <button type="button"
                     v-else
                     class="button-favorites"
-                    @click="addToFavorites">
+                    @click.stop="addToFavorites">
                 &star;
                 <span class="button-favorites__tooltip">Add to favorites</span>
             </button>
@@ -109,7 +117,7 @@ function removeFromFavorites(){
         <button v-if="isDeleteButtonDisplayed"
                 class="city-card-delete"
                 type="button"
-                @click="openModal">Delete city info</button>
+                @click.stop="openModal">Delete city info</button>
     </div>
     <ModalWindow :open="isModalOpen"
                  @close-modal="closeModal">

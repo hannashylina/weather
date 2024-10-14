@@ -1,6 +1,6 @@
 <script setup>
 import Chart from 'chart.js/auto'
-import {computed, onMounted, watch} from 'vue'
+import { computed, onMounted, watch, ref } from 'vue'
 
 const props = defineProps({
     labels: Array,
@@ -12,9 +12,10 @@ const chartId = computed(() => {
     return `temperature-chart-${props.id}`
 })
 
-onMounted(() => {
-    const ctx = document.getElementById(chartId.value)
-    new Chart(ctx, {
+let chart = {}
+
+const config = computed(() => {
+    return {
         type: 'line',
         data: {
             labels: props.labels,
@@ -43,7 +44,21 @@ onMounted(() => {
                 }
             }
         }
-    });
+    }
+})
+
+watch(config, () => {
+    chart.destroy()
+    renderChart()
+})
+
+function renderChart(){
+    const ctx = document.getElementById(chartId.value)
+    chart = new Chart(ctx, config.value);
+}
+
+onMounted(() => {
+    renderChart()
 })
 </script>
 

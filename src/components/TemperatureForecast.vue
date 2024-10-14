@@ -1,14 +1,15 @@
 <script setup>
 import axios from "axios";
 import Chart from './Chart.vue'
-import { onMounted, computed, reactive, ref } from 'vue'
+import { onMounted, computed, reactive, ref, watch } from 'vue'
 import { useCitiesStore } from './stores/cities'
+import { storeToRefs } from "pinia";
 
 const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY
 const HOURLY_FORECAST_API_URL = import.meta.env.VITE_OPEN_WEATHER_5DAY_3HOUR_FORECAST_API_URL
 
 const citiesStore = useCitiesStore()
-const activeCity = citiesStore.activeCity
+const { activeCity } = storeToRefs(citiesStore)
 
 const chartDisplayMode = ref('one')
 
@@ -58,6 +59,10 @@ const temperaturesFiveDays = computed(() => {
     return forecastFiveDaysDisplayData.value.map(item => Math.round(item.main.temp))
 })
 
+watch(activeCity, (newCity) => {
+    getHourlyForecast(newCity)
+}, { deep: true })
+
 function getHourlyForecast(city) {
     axios.get(`${HOURLY_FORECAST_API_URL}?lat=${city.coord.lat}&lon=${city.coord.lon}&appid=${API_KEY}&units=metric`)
         .then(res => {
@@ -67,7 +72,7 @@ function getHourlyForecast(city) {
 }
 
 onMounted(() => {
-    getHourlyForecast(activeCity)
+    getHourlyForecast(activeCity.value)
 })
 </script>
 
