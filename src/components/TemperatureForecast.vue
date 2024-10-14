@@ -125,5 +125,15 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.period-label {
+    font-size: 17px;
+}
 
+.period-select {
+    font-size: 17px;
+    padding: 5px;
+    border-radius: 5px;
+    background: transparent;
+    outline: none;
+}
 </style>

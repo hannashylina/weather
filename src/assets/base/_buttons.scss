@@ -1,0 +1,26 @@
+.buttons-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  gap: 20px
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.button-cancel {
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+  color: grey;
+}
+
+.button-confirm {
+  background: #e75050;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+}

@@ -1,63 +1,32 @@
-@import 'base';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@import "base/vars";
+@import "base/grid";
+@import "base/modal";
+@import "base/buttons";
+
+@import "components/display-toggle";
+@import "components/city-card";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  color: $color-text;
+  line-height: 1.6;
+  font-size: 15px;
+}
 
 #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem 20px;
   font-weight: normal;
-}
-
-.buttons-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 25px;
-  gap: 20px
-}
-
-.button {
-  padding: 10px 20px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.button-cancel {
-  border: none;
-  background: transparent;
-  text-decoration: underline;
-  color: grey;
-}
-
-.button-confirm {
-  background: #e75050;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-}
-
-.row {
-  display: flex;
-  gap: 20px;
-  @media screen and (max-width: 767px) {
-    flex-direction: column-reverse;
-  }
-}
-
-.col-40 {
-  width: 40%;
-}
-
-.col-50 {
-  width: 50%;
-}
-
-.col-60 {
-  width: 60%;
-}
-
-.col-sm-100 {
-  @media  screen and (max-width: 767px) {
-    width: 100%;
-  }
 }
 
 .cities-wrapper {
@@ -75,91 +44,15 @@
   }
 }
 
-.city-card {
-  padding: 15px;
-  border: 1px solid var(--color-border);
-  border-radius: 5px;
-  position: relative;
-  display: grid;
-  grid-template-areas:
-          "heading weather-icon"
-          "description weather-icon"
-          "temperature temperature"
-          "humidity humidity"
-          "wind wind";
-  @media screen and (max-width: 768px) {
-    grid-template-areas:
-          "weather-icon"
-          "heading"
-          "description"
-          "temperature"
-          "humidity"
-          "wind";
-  }
-  @media screen and (max-width: 768px) {
-    grid-template-areas:
-          "heading weather-icon"
-          "description weather-icon"
-          "temperature temperature"
-          "humidity humidity"
-          "wind wind";
-  }
-  &.active {
-    border-color: darkorange;
-  }
-}
-
-.city-card-heading {
-  grid-area: heading;
-  cursor: pointer;
-  text-decoration: underline;
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-.city-card-description {
-  grid-area: description
-}
-
-.city-card-icon {
-  grid-area: weather-icon;
-}
-
-.city-card-temperature {
-  grid-area: temperature;
-}
-
-.city-card-humidity {
-  grid-area: humidity;
-}
-
-.city-card-wind {
-  grid-area: wind;
-}
-
-.city-card-favorites {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
-
-.city-card-delete {
-  @extend .button-cancel;
-  padding: 10px 0;
-  cursor: pointer;
-  width: fit-content;
-}
 
 .add-city-button {
   padding: 15px;
-  border: 2px solid var(--color-border);
+  border: 2px solid $color-border;
   border-radius: 5px;
   position: relative;
   font-size: 20px;
   background: transparent;
   color: #bfbfbf;
-  border-color: #d6d6d6;
   cursor: pointer;
   transition: all ease-in 200ms;
   width: 100%;
@@ -191,7 +84,7 @@
   line-height: 40px;
   padding: 0 10px;
   max-width: 100%;
-  border: 1px solid var(--color-border);
+  border: 1px solid $color-border;
   outline: none;
   border-radius: 5px;
 }
@@ -208,7 +101,7 @@
 
 .cities-input-button {
   width: 100%;
-  background: var(--color-background-mute);
+  background: $color-bg;
   outline: none;
   box-shadow: none;
   border: none;
@@ -216,141 +109,10 @@
   text-align: left;
   cursor: pointer;
   &:hover {
-    background: var(--color-background-soft);
+    background: $color-bg-hover;
   }
 }
 
-.button-favorites {
-  position: relative;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  font-size: 30px;
-  color: darkorange;
-  &__tooltip {
-    position: absolute;
-    display: none;
-    background: darkorange;
-    color: #ffffff;
-    white-space: nowrap;
-    padding: 5px;
-    font-size: 13px;
-    z-index: 1;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
-    margin-top: 5px;
-    &:after {
-      bottom: 100%;
-      left: 50%;
-      border: solid transparent;
-      content: "";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-bottom-color: #FF8C00FF;
-      border-width: 5px;
-      margin-left: -5px;
-    }
-  }
-  &:hover .button-favorites__tooltip {
-    display: block;
-  }
-}
-
-.display-toggle {
-  border: none;
-  width: fit-content;
-  padding: 0;
-  margin-bottom: 20px;
-}
-
-.display-toggle-label {
-  padding: 5px 10px;
-  font-size: 17px;
-  border: 1px solid darkorange;
-  border-radius: 5px;
-  color: darkorange;
-  cursor: pointer;
-  &.active {
-    background: darkorange;
-    color: #ffffff
-  }
-  &:first-child {
-    border-right-width: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &:last-child {
-    border-left-width: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
-
-.display-toggle-input {
-  opacity: 0;
-  width: 0;
-}
-
-.temperature-chart {
-  width: 400px;
-  max-width: 100%;
-  height: 400px;
-}
-
-.period-label {
-  font-size: 17px;
-}
-
-.period-select {
-  font-size: 17px;
-  padding: 5px;
-  border-radius: 5px;
-  background: transparent;
-  outline: none;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  &.open {
-    display: flex;
-  }
-}
-
-.modal-inner {
-  position: relative;
-  background: #ffffff;
-  padding: 60px 40px 30px;
-  border-radius: 5px;
-  @media screen and (max-width: 768px) {
-    width: 90%;
-  }
-}
-
-.modal-close {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  width: 30px;
-  height: 30px;
-  font-size: 30px;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  line-height: 30px;
-}
 
 
 

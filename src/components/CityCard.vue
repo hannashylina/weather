@@ -100,17 +100,17 @@ function changeActiveCity(){
         <div class="city-card-favorites">
             <button type="button"
                     v-if="isCityInFavorites"
-                    class="button-favorites"
+                    class="city-favorites"
                     @click.stop="removeFromFavorites">
                 &starf;
-                <span class="button-favorites__tooltip">Remove from favorites</span>
+                <span class="city-favorites__tooltip">Remove from favorites</span>
             </button>
             <button type="button"
                     v-else
-                    class="button-favorites"
+                    class="city-favorites"
                     @click.stop="addToFavorites">
                 &star;
-                <span class="button-favorites__tooltip">Add to favorites</span>
+                <span class="city-favorites__tooltip">Add to favorites</span>
             </button>
         </div>
         <div v-if="isDeleteButtonDisplayed">

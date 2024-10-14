@@ -72,5 +72,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
+.temperature-chart {
+    width: 400px;
+    max-width: 100%;
+    height: 400px;
+}
 </style>
