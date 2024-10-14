@@ -70,7 +70,7 @@
   @media screen and (max-width: 768px) {
     grid-template-columns: 45% 45%;
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     grid-template-columns: 100%;
   }
 }
@@ -180,6 +180,9 @@
   width: fit-content;
   position: relative;
   margin-bottom: 20px;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .cities-input {
@@ -331,6 +334,9 @@
   background: #ffffff;
   padding: 60px 40px 30px;
   border-radius: 5px;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 }
 
 .modal-close {
