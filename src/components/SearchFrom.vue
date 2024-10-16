@@ -39,7 +39,7 @@ watch(cityQuery, (newCityQuery) => {
 </script>
 
 <template>
-    <form class="cities-form">
+    <div class="cities-form">
         <div class="cities-dropdown-wrap">
             <input name="cities"
                    class="cities-input"
@@ -58,7 +58,7 @@ watch(cityQuery, (newCityQuery) => {
                 </button>
             </div>
         </div>
-    </form>
+    </div>
 </template>
 
 <style scoped>
