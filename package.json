@@ -7,7 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -ad dist build",
+    "gh-help": "gh-pages --help"
   },
   "dependencies": {
     "pinia": "^2.2.4",
