@@ -2,7 +2,6 @@
 import { ref, computed } from "vue"
 import { useCitiesStore } from './stores/cities'
 import CityCard from "./CityCard.vue"
-import AddCard from "./AddCard.vue"
 import ModalWindow from "./ModalWindow.vue";
 import SearchFrom from "./SearchFrom.vue";
 

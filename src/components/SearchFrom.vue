@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import { onMounted, reactive, ref, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import { useCitiesStore } from './stores/cities'
 
 const citiesStore = useCitiesStore()
@@ -29,7 +29,6 @@ watch(cityQuery, (newCityQuery) => {
     if (newCityQuery.length > 0) {
         axios.get(`${GEO_API_URL}?q=${newCityQuery}&limit=${MAX_SEARCH_RESULTS_NUMBER}&appid=${API_KEY}`)
             .then(resp => {
-                //       console.log(resp)
                 citiesDropdownGeo.data = resp.data
                 isCitiesDropdownOpen.value = true
             })
@@ -47,7 +46,8 @@ watch(cityQuery, (newCityQuery) => {
                    placeholder="Enter city..."
                    autocomplete="off"
                    v-model="cityQuery" />
-            <div class="cities-dropdown" v-if="isCitiesDropdownOpen">
+            <div class="cities-dropdown"
+                 v-if="isCitiesDropdownOpen">
                 <button @click.prevent="getCityData(city)"
                         class="cities-input-button"
                         type="button"

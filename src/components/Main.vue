@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, computed, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { useCitiesStore } from './stores/cities'
 import CityCards from "./CityCards.vue"
 import DisplayToggle from "./DisplayToggle.vue"
