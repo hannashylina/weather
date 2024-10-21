@@ -1,5 +1,4 @@
 {
-  "homepage": "https://hannashylina.github.io/weather",
   "name": "weather",
   "version": "0.0.0",
   "private": true,
@@ -9,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -a -d dist",
+    "deploy": "gh-pages -a -d dist -e weather",
     "help": "gh-pages --help"
   },
   "dependencies": {
