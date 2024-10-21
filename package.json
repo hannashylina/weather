@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -a -d dist"
+    "deploy": "gh-pages -a -d dist",
+    "help": "gh-pages --help"
   },
   "dependencies": {
     "pinia": "^2.2.4",
