@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -a -d dist -e weather",
+    "deploy": "gh-pages -a -d dist",
     "help": "gh-pages --help"
   },
   "dependencies": {
